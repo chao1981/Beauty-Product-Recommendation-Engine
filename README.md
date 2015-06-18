@@ -9,17 +9,9 @@ Goal : Beauty product recommendation.
          (based on number of stars : Laplace transformation, and weight 1-start review heavier)
        
        3) Natural Language processing : TF-IDF, Document Summarization, Sentiment Analysis Graph (vs Star-Graph)
-              * Build product-user-profile : skin types, sensitivity, concerns
+              * Build product-user-profile : skin type and sensitivity
        
        
        4) Build an application where the user can type in specify requirement for the product. 
        		Based on text comparison, return a maximum of 3 products as recommendations.
-       		Post the summary for these three products.
-       		
-Website: beauty3.ninja 
-
-Why the name? 
-
-Beauty3 : because the application will only recommend 3 products (no more overwhelming list of products. Yay!!!) 
-
-.ninja : because ninjas are famous for being very skilled and precise (and because it's awesome :D.)
+       			

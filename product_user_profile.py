@@ -49,7 +49,8 @@ def product_profiler(item_dict):
     smooth_reviews = total_reviews +100
     
     #Dictionary for the item with category score
-    item_score = {item_dict.keys()[0]:item_dict.values()[0][0]}
+    #item_score = {item_dict.keys()[0]:item_dict.values()[0][0]}
+    item_score = {}
 
     for review_text in list_of_text:
         
