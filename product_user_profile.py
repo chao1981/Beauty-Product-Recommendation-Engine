@@ -1,11 +1,6 @@
 import nltk
 
-dry_class = ["dry skin", "from drying out", "dry and combination skin",
-             "dry weather", "dry winter", "dry condition", "dry, flaky skin",
-             " dryness", "dry spots", "dry, itchy skin", "dry winter skin"]
 
-oily_class = ["oily skin", "oily and combination skin", "not oily", 
-              "oily/combination skin"]
 
 #For a category, calculate score of that category
 #by counting the number of times a term in that category
@@ -21,6 +16,22 @@ def category_score(text,category,rating):
 #Base on reviews of a product, built a the profile of
 #the user that like this produc
 def product_profiler(item_dict):
+    dry_class = ["dry skin", "from drying out", "dry and combination skin",
+             "dry weather", "dry winter", "dry condition", "dry, flaky skin",
+             " dryness", "dry spots", "dry, itchy skin", "dry winter skin",
+             "dry sensitive skin"]
+
+    oily_class = ["oily skin", "oily and combination skin", "not oily", 
+              "oily/combination skin", "oily/acne prone", "oily/acnes prone",
+              "oily prone", "combination oily"]
+
+    combination_class = ["combination skin","combination/", "combination oily skin", 
+                     "combination dry skin", "combination acne-prone skin"]
+
+    acne_class = ["acne", "break out", "broke out"]
+
+    anti_aging_class = ["anti-aging", " aging", "wrinkle", "fine lines"]
+    
     dry_skin = 0
     oily_skin = 0
     combination_skin = 0
@@ -42,4 +53,5 @@ def product_profiler(item_dict):
         combination_skin += category_score(new_text,combination_class,rev_rating)
         sensitivity += category_score(new_text,sensitive_class,rev_rating)
 
-    return [dry_skin/smooth_reviews, oily_skin/smooth_reviews, combination_skin/smooth_reviews, sensitivity/smooth_reviews]
+    return [dry_skin/smooth_reviews, oily_skin/smooth_reviews, 
+            combination_skin/smooth_reviews, sensitivity/smooth_reviews]
