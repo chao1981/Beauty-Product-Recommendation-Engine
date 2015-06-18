@@ -17,4 +17,9 @@ Goal : Beauty product recommendation.
        		Post the summary for these three products.
        		
 Website: beauty3.ninja 
-       			
+
+Why the name? 
+
+Beauty3 : because the application will only recommend 3 products (no more overwhelming list of products. Yay!!!) 
+
+.ninja : because ninjas are famouse for being very skilled and precise. (and because it's awesome :D)
