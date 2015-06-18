@@ -14,4 +14,15 @@ Goal : Beauty product recommendation.
        
        4) Build an application where the user can type in specify requirement for the product. 
        		Based on text comparison, return a maximum of 3 products as recommendations.
+
+Future website (in the process of building) : beauty3.ninja
+
+Website name explained: 
+
+beauty3 : We only recommend 3 beauty products at a times (yay, no overwhelming amounts of products)
+
+.ninja  : Because just as ninja, we are highly skilled and precise.
+(secretly, as always come with "ninja", is because it's awesome :D)
+
+
        			
