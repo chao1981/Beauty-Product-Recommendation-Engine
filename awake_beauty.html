@@ -18,17 +18,34 @@
   <script src="js/bootstrap.min.js"></script>
 
   <style>
+    
     body {background-color:lightblue}
     h1   {color:plum}
     input{color:black}
+
+    button {
+    float: left;
+    height: 100px;
+    width: 100px;
+    border-radius: 50px;
+    border: 5px solid #000;
+    margin: 5000;
+
+}
+  
+
+  
+
     .condition_box {
     float: left;
-    margin: 15px;
+    margin: 1%;
     padding: 10px;
-    width: 250px;
+    width: 20%;
     height: 250px;
     border: 2px solid black;
 } 
+
+
 </style>
 </head>
 
@@ -37,7 +54,7 @@
    <h2> Skin type </h2>
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="edit"> Dry Skin
+          <input type="radio" name="check" value="0.0" id="dry_skin"> Dry Skin
             </label>
           </div>
           
@@ -128,17 +145,19 @@
 
 <div class="condition_box ">
   <h2>What else?</h2>
-  <form action="action_page.php">
-  <textarea rows="12" cols="36" ></textarea>
-  </form>
         
 </div>
 
 
 
 
+
+
+
+
+
  
-   <!--  <input type="submit" value="Tell me"> -->
+   
 
 </body>
 
