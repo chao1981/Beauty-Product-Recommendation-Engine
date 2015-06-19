@@ -7,7 +7,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1">
 
   <!-- title and everything has to come after set up basics codes-->
-  <h1>Beauty Search Engine</h1>
+  <h1 style="text-align:center">Beauty Search Engine</h1>
   
   <!--Bootstrap-->
   <link href="css/bootstrap.min.css" rel="stylesheet">
@@ -16,36 +16,129 @@
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="http://d3js.org/d3"></script>
   <script src="js/bootstrap.min.js"></script>
+
+  <style>
+    body {background-color:lightblue}
+    h1   {color:plum}
+    input{color:black}
+    .condition_box {
+    float: left;
+    margin: 15px;
+    padding: 10px;
+    width: 250px;
+    height: 250px;
+    border: 2px solid black;
+} 
+</style>
 </head>
 
 <body>
+  <div class="condition_box ">
+   <h2> Skin type </h2>
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Dry Skin
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Oily Skin
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Combination Skin
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Normal Skin
+            </label>
+          </div>
+</div>
 
-    <form action="action_page.php">
-      <fieldset>
-        <legend>My skin type is:</legend>
-          <div class="checkbox">
+<div class="condition_box ">
+  <h2>Main concern</h2>
+  <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Dry Skin
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Acnes
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Anti-Aging
+            </label>
+          </div>
+
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="edit"> Redness
+            </label>
+          </div>
+</div>
+
+<div class="condition_box ">
+  <h2>Other concerns</h2>
+  <div class="checkbox" method="get" >
            <label>
           <input type="checkbox" name="check" value="edit"> Dry Skin
             </label>
           </div>
-          <div class="checkbox">
+          
+          <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Oily Skin
+          <input type="checkbox" name="check" value="edit"> Acnes
             </label>
           </div>
-          <div class="checkbox">
+          
+          <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Combination Skin
+          <input type="checkbox" name="check" value="edit"> Anti-Aging
             </label>
           </div>
-          <div class="checkbox">
+          
+          <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Normal Skin
+          <input type="checkbox" name="check" value="edit"> Redness
             </label>
           </div>
-            
-      </fieldset>
-    </form>
+
+          <div class="checkbox" method="get">
+           <label>
+          <input type="checkbox" name="check" value="edit"> Sensitive Skin
+            </label>
+          </div>
+
+          <div class="checkbox" method="get">
+           <label>
+          <input type="checkbox" name="check" value="edit"> Sunscreen
+            </label>
+          </div>
+</div>
+
+<div class="condition_box ">
+  <h2>What else?</h2>
+  <form action="action_page.php">
+  <textarea rows="12" cols="36" ></textarea>
+  </form>
+        
+</div>
+
+
+
+
+ 
+   <!--  <input type="submit" value="Tell me"> -->
 
 </body>
 
