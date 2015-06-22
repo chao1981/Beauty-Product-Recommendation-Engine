@@ -10,12 +10,11 @@
   <h1 style="text-align:center">Beauty Search Engine</h1>
   
   <!--Bootstrap-->
-  <link href="css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
   <!--import libraries-->
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
-  <script src="http://d3js.org/d3"></script>
-  <script src="js/bootstrap.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
   <style>
     
@@ -60,18 +59,45 @@
     height: 250px;
     border: 2px solid black;
 } 
+    .result_box {
+    float: left;
+    margin: 1%;
+    padding: 10px;
+    width: 30%;
+    height: 250px;
+    border: 2px solid black;
 
+    }
 
 </style>
 </head>
 
 <body>
+  <div class="container">
 
-  <form>
-    <fieldset>
-    <legend> The Beauty Information</legend>
-    <div class="condition_box " >
-      <h2> Skin type </h2>
+      <!-- The justified navigation menu is meant for single line per list item.
+           Multiple lines will require custom code not provided by Bootstrap. -->
+      <div class="masthead">
+        <h3 class="text-muted">Project name</h3>
+        <nav>
+          <ul class="nav nav-justified">
+            <li class="active"><a href="#">Home</a></li>
+            <li><a href="#">Projects</a></li>
+            <li><a href="#">Services</a></li>
+            <li><a href="#">Downloads</a></li>
+            <li><a href="#">About</a></li>
+            <li><a href="#">Contact</a></li>
+          </ul>
+        </nav>
+      </div>
+
+      <!-- Jumbotron -->
+      <div class="jumbotron">
+        <form>
+        <fieldset>
+        <legend> The Beauty Information</legend>
+          <div class="condition_box " >
+           <h2> Skin type </h2>
           <div class="radio">
            <label>
           <input type="radio"  name="skin_type" value="dry_skin_score" id="dry_skin"> Dry Skin
@@ -168,30 +194,93 @@
       <textarea name="extra_information" rows="12" cols="26" id="textbox"></textarea>
         
     </div>
-    <input type="submit" value="submit">
+  <!--   <input type="submit" value="submit"> -->
+  <button type="submit" class="btn btn-lg btn-success">Submit</button>
   </fieldset>
+</form>
+
+  </div>
+
+      <!-- Example row of columns -->
+      <div class="row">
+        <div class="col-lg-4" id="product_1">
+          <h2>Product 1</h2>
+          
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+        <div class="col-lg-4">
+          <h2>Product 2</h2>
+          <p> </p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+       </div>
+        <div class="col-lg-4">
+          <h2>Product 3</h2>
+          <p></p>
+          <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
+        </div>
+      </div>
+
+      <!-- Site footer -->
+      <footer class="footer">
+        <p>&copy; Company 2014</p>
+      </footer>
+
+    </div> <!-- /container -->
+
 
   
-</form>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
 
+  <div class="result_box" id = "product_1">
+    <textarea name="extra_information" rows="12" cols="26" id="textbox" value=""></textarea>
+  </div>
+
+
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
+
+<script>
   $('form').on('submit', function(e) {
     e.preventDefault();
     e.returnValue = false;
-    alert('omg');
+    recommend_product()
+    
   });
-  var other_concerns = $.map($("input:checkbox:checked"), function(elem){return $(elem).val();});
-
-  var skin_id = $('input[name="skin_type"]:checked').val();
-
-  var priority = $('input[name="main_concern"]:checked').val()
+  
 
 
   function recommend_product(){
+    var other_concerns = $.map($("input:checkbox:checked"), function(elem){return $(elem).val();});
+
+    var skin_id = $('input[name="skin_type"]:checked').val();
+
+    var priority_concern = $('input[name="main_concern"]:checked').val();
+
+    var user_spec = document.getElementById("textbox").value;
+
+    var input_data = "{\"skin_type\": [\"" + skin_id + "\"],\"priority\":[\"" + priority_concern + "\"],\"others\":[\"" + other_concerns + "\"],\"extra_info\":[\"" + user_spec + "\"]}";
+    console.log(input_data);
+
+
+    $.ajax({
+      type:"POST",
+      contentType: "application/json; charset=utf-8",
+      url:"/recommendation",
+      dataType:"json",
+      async:true,
+      data: input_data,
+      success: function(data){
+        // console.log('data is', data);
+        $("#product_1").text(data[1][0]);
+        // var mytextbox = document.getElementById("product_1");
+        //                           mytextbox = mytextbox.value+ data.keys()[1];
+                                  },
+      error: function(result) { console.log("error!", result)}
+
+
+    })
 
   }
 
-  user_spec = document.getElementById("textbox").value
+  
 </script>
 
 

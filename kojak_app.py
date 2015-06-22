@@ -2,7 +2,7 @@ import flask
 import numpy as np
 import pandas as pd
 import pymongo
-from pymongo import MongoClient()
+from pymongo import MongoClient
 
 
 #--------------Function for querying the product-----#
@@ -46,7 +46,8 @@ def viz_page():
 	with open("awake_beauty.html", 'r') as viz_file:
 		return viz_file.read()
 
-@app.route("/recommendation", method=["POST"])
+@app.route("/recommendation", methods=["POST"])
+def recommendation():
 	"""
 	When a POST request with json data is made to this url,
 	read the data from json, find the beauty product, then
@@ -54,17 +55,28 @@ def viz_page():
 	"""
 	data = flask.request.json
 	
-	priority_concern = data["priority"]
+	priority_concern = data["priority"][0]
+	other_concerns = data["others"][0].split(",")
 
-	list_of_concern = data["priority"]+ data["skin_type"] +data["others"]
+	list_of_concern = data["priority"]+ data["skin_type"] + other_concerns
 
 	list_of_concern = list(set(list_of_concern))
+	print list_of_concern
 
-	recommended_items =list_of_10(priority_concern,list_of_concern) 	
-	# CAN I DO :recommended_product = list_of_3(*data.values()) ???
+	recommended_items =list_of_10(priority_concern,list_of_concern) 
 
-	#this is in case the return json does not act like a dictionary :
-	#data_dict = json.loads(data)[0]
+	results = {1:[recommended_items[0]['name'],recommended_items[0]['price']],
+			   2:[recommended_items[1]['name'],recommended_items[1]['price']],
+			   3:[recommended_items[2]['name'],recommended_items[2]['price']]} 	
+
+	return flask.jsonify(results)
+
+#--------- RUN WEB APP SERVER ------------#
+
+# Start the app server on port 80
+# (The default website port)
+app.run(host='0.0.0.0', port=8000, debug=True)
+
 
 
 
