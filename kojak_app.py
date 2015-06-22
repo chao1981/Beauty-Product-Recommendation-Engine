@@ -6,22 +6,27 @@ from pymongo import MongoClient()
 
 
 #--------------Function for querying the product-----#
-def list_of_3(priority,dry_score,oily_score,combination_score,sensitive_score,acne_score,sensitive_score,sunscreen_score,anti_aging_score,redness_score):
-	client = MongoClient()
-	smarter_profile = client.dsbc.smarter_profile
-	pipeline = [{"$project":{"name":1,"item_id":1,"price":1}},
-				{"$match":{"dry_skin_score":{"$gt":dry_score},
-				 		   "oily_skin_score":{"$gt":oily_score},
-				 		   "combination_skin_score":{"$gt":combination_score},
-				 		   "sensitive_score":{"$gt":sensitive_score},
-				 		   "acne_score":{"$gt":acne_score},
-				 		   "sunscreen_score":{"$gt":sunscreen_score},
-				 		   "anti_aging_score":{"$gt":anti_aging_score},
-				 		   "redness_score":{"$gt":redness_score}}},
-				 {"$sort":{"$$priority":-1}},
-				 {"$limit":3}]
-	list_of_products = smarter_profile.aggregate(pipeline)
-	return list_of_products
+def list_of_10(priority,concern_list):
+    dd ={"dry_skin_score":-0.1,"oily_skin_score":-0.1, 
+         "sensitive_score":-0.1,"sunscreen_score":-0.1,
+         "combination_skin_score":-0.1,"redness_score":-0.1,
+         "anti_aging_score":-0.1,"acne_score":-0.1}
+
+# concern_list = ["dry_skin_score", "acne_score"]
+    for concern in concern_list:
+        dd[concern]=0.0
+    
+    sp = MongoClient().dsbc.smarter_profile
+    x = sp.find({"dry_skin_score":{"$gt":dd["dry_skin_score"]}, "oily_skin_score":{"$gt":dd["oily_skin_score"]},
+                 "sensitive_score":{"$gt":dd["sensitive_score"]},"sunscreen_score":{"$gt":dd["sunscreen_score"]},
+                 "combination_skin_score":{"$gt":dd["combination_skin_score"]}, "redness_score":{"$gt":dd["redness_score"]},
+                 "anti_aging_score":{"$gt":dd["anti_aging_score"]},"acne_score":{"$gt":dd["acne_score"]}})
+    number_of_items = min(10,x.count())
+    list_of_items = []
+    for i in xrange(number_of_items):
+        list_of_items.append(x.sort(priority,pymongo.DESCENDING)[i])
+    
+    return list_of_items 
 
 
 

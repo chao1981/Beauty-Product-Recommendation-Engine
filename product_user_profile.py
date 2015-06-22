@@ -82,6 +82,6 @@ def product_profiler(item_dict):
     item_score["acne_score"] = acne_score
     item_score["anti_aging_score"] = aging_score
     item_score["sunscreen_score"] = sunscreen_score
-    item_score["redness_score"] = redness
+    item_score["redness_score"] = redness_score
     
     return item_score

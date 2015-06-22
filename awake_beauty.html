@@ -32,6 +32,22 @@
     margin: 5000;
 
 }
+    .wrapper {
+       width: 800px;
+       margin-left: auto;
+       margin-right: auto;
+       margin-bottom: 0px;
+     }
+     #bar_chart {
+       margin-bottom: 0 px;
+     }
+    .bar {
+       fill: #FF75A3;
+     }
+     span {
+       color: steelblue;
+     }
+
   
 
   
@@ -50,111 +66,113 @@
 </head>
 
 <body>
-  <div class="condition_box ">
-   <h2> Skin type </h2>
-          <div class="radio" >
-           <label>
-          <input type="radio" name="check" value="0.0" id="dry_skin"> Dry Skin
-            </label>
-          </div>
-          
-          <div class="radio" >
-           <label>
-          <input type="radio" name="check" value="edit"> Oily Skin
-            </label>
-          </div>
-          
-          <div class="radio" >
-           <label>
-          <input type="radio" name="check" value="edit"> Combination Skin
-            </label>
-          </div>
-          
-          <div class="radio" >
-           <label>
-          <input type="radio" name="check" value="edit"> Normal Skin
-            </label>
-          </div>
-</div>
 
-<div class="condition_box ">
-  <h2>Main concern</h2>
-  <div class="radio" >
+  <form action="/recommendation" method="post">
+    <fieldset>
+    <legend> The Beauty Information</legend>
+    <div class="condition_box ">
+      <h2> Skin type </h2>
+          <div class="radio">
            <label>
-          <input type="radio" name="check" value="edit"> Dry Skin
+          <input type="radio"  value="dry_skin_score" id="dry_skin"> Dry Skin
             </label>
           </div>
           
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="edit"> Acnes
+          <input type="radio" value="oily_skin_score" id="oily_skin"> Oily Skin
             </label>
           </div>
           
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="edit"> Anti-Aging
+          <input type="radio" value="combination_skin_score" id="combination_skin"> Combination Skin
+            </label>
+          </div>
+          
+         <!--  <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="0.0" id="normal_skin"> Normal Skin
+            </label>
+          </div> -->
+      </div>
+
+    <div class="condition_box ">
+      <h2>Main concern</h2>
+        <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="dry_skin_score"> Dry Skin
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="acne_score"> Acnes
+            </label>
+          </div>
+          
+          <div class="radio" >
+           <label>
+          <input type="radio" name="check" value="anti_aging_score"> Anti-Aging
             </label>
           </div>
 
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="edit"> Redness
+          <input type="radio" name="check" value="redness_score"> Redness
             </label>
           </div>
-</div>
+    </div>
 
-<div class="condition_box ">
-  <h2>Other concerns</h2>
-  <div class="checkbox" method="get" >
+    <div class="condition_box ">
+      <h2>Other concerns</h2>
+        <div class="checkbox" method="get" >
            <label>
-          <input type="checkbox" name="check" value="edit"> Dry Skin
+          <input type="checkbox" name="check" value="dry_skin_score"> Dry Skin
             </label>
           </div>
           
           <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Acnes
+          <input type="checkbox" name="check" value="acne_score"> Acnes
             </label>
           </div>
           
           <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Anti-Aging
+          <input type="checkbox" name="check" value="anti_aging_score"> Anti-Aging
             </label>
           </div>
           
           <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Redness
+          <input type="checkbox" name="check" value="redness_score"> Redness
             </label>
           </div>
 
           <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Sensitive Skin
+          <input type="checkbox" name="check" value="sensitive_score"> Sensitive Skin
             </label>
           </div>
 
           <div class="checkbox" method="get">
            <label>
-          <input type="checkbox" name="check" value="edit"> Sunscreen
+          <input type="checkbox" name="check" value="sunscreen_score"> Sun Protection
             </label>
           </div>
-</div>
+    </div>
 
-<div class="condition_box ">
-  <h2>What else?</h2>
+   <div class="condition_box ">
+      <h2>What else?</h2>
+      <textarea name="special information" rows="12" cols="26"></textarea>
         
-</div>
+    </div>
+    <input type="submit" value="Submit">
+  </fieldset>
 
-
-
-
-
-
-
-
+  
+</form>
 
  
    
