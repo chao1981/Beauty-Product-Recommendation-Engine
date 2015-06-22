@@ -67,59 +67,59 @@
 
 <body>
 
-  <form action="/recommendation" method="post">
+  <form>
     <fieldset>
     <legend> The Beauty Information</legend>
-    <div class="condition_box ">
+    <div class="condition_box " >
       <h2> Skin type </h2>
           <div class="radio">
            <label>
-          <input type="radio"  value="dry_skin_score" id="dry_skin"> Dry Skin
+          <input type="radio"  name="skin_type" value="dry_skin_score" id="dry_skin"> Dry Skin
             </label>
           </div>
           
           <div class="radio" >
            <label>
-          <input type="radio" value="oily_skin_score" id="oily_skin"> Oily Skin
+          <input type="radio" name="skin_type" value="oily_skin_score" id="oily_skin"> Oily Skin
             </label>
           </div>
           
           <div class="radio" >
            <label>
-          <input type="radio" value="combination_skin_score" id="combination_skin"> Combination Skin
+          <input type="radio" name="skin_type" value="combination_skin_score" id="combination_skin"> Combination Skin
             </label>
           </div>
           
          <!--  <div class="radio" >
            <label>
-          <input type="radio" name="check" value="0.0" id="normal_skin"> Normal Skin
+          <input type="radio" name="skin_type" value="0.0" id="normal_skin"> Normal Skin
             </label>
           </div> -->
       </div>
 
-    <div class="condition_box ">
+    <div class="condition_box" >
       <h2>Main concern</h2>
         <div class="radio" >
            <label>
-          <input type="radio" name="check" value="dry_skin_score"> Dry Skin
+          <input type="radio" name="main_concern" value="dry_skin_score"> Dry Skin
             </label>
           </div>
           
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="acne_score"> Acnes
+          <input type="radio" name="main_concern" value="acne_score"> Acnes
             </label>
           </div>
           
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="anti_aging_score"> Anti-Aging
+          <input type="radio" name="main_concern" value="anti_aging_score"> Anti-Aging
             </label>
           </div>
 
           <div class="radio" >
            <label>
-          <input type="radio" name="check" value="redness_score"> Redness
+          <input type="radio" name="main_concern" value="redness_score"> Redness
             </label>
           </div>
     </div>
@@ -165,14 +165,38 @@
 
    <div class="condition_box ">
       <h2>What else?</h2>
-      <textarea name="special information" rows="12" cols="26"></textarea>
+      <textarea name="extra_information" rows="12" cols="26" id="textbox"></textarea>
         
     </div>
-    <input type="submit" value="Submit">
+    <input type="submit" value="submit">
   </fieldset>
 
   
 </form>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js">
+
+  $('form').on('submit', function(e) {
+    e.preventDefault();
+    e.returnValue = false;
+    alert('omg');
+  });
+  var other_concerns = $.map($("input:checkbox:checked"), function(elem){return $(elem).val();});
+
+  var skin_id = $('input[name="skin_type"]:checked').val();
+
+  var priority = $('input[name="main_concern"]:checked').val()
+
+
+  function recommend_product(){
+
+  }
+
+  user_spec = document.getElementById("textbox").value
+</script>
+
+
+
+
 
  
    

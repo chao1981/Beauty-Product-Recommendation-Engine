@@ -53,7 +53,14 @@ def viz_page():
 	return the response
 	"""
 	data = flask.request.json
+	
+	priority_concern = data["priority"]
 
+	list_of_concern = data["priority"]+ data["skin_type"] +data["others"]
+
+	list_of_concern = list(set(list_of_concern))
+
+	recommended_items =list_of_10(priority_concern,list_of_concern) 	
 	# CAN I DO :recommended_product = list_of_3(*data.values()) ???
 
 	#this is in case the return json does not act like a dictionary :
