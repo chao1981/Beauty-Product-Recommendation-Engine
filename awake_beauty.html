@@ -207,7 +207,22 @@
             <h2>Product 1</h2>
           </div>
           <p id="Price_1"></p> 
-          <button type="button" class="btn btn-primary" id="product_1_details">Product Details</button>
+
+
+       <div class="panel panel-default">
+        <div class="panel-heading" role="tab" id="headingTwo">
+          <h4 class="panel-title">
+            <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="false" aria-controls="collapseOne">Product Details
+            </a>
+          </h4>
+        </div>
+        <div id="collapseOne" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingOne">
+          <div class="panel-body" id="product_1_details" >
+          </div>
+        </div>
+      </div>
+
+
         </div>
         
 
@@ -216,15 +231,41 @@
             <h2>Product 2</h2>
           </div>
           <p id="Price_2"></p> 
-          <button type="button" class="btn btn-primary" id="product_2_details">Product Details</button>
+
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">Product Details
+              </a>
+            </h4>
+          </div>
+          <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+            <div class="panel-body" id="product_2_details" >
+            </div>
+          </div>
         </div>
+      </div>
 
         <div class="col-lg-4">
           <div class="products" id="product_3">
             <h2>Product 3</h2>
           </div>
           <p id="Price_3"></p> 
-          <button type="button" class="btn btn-primary" id="product_3_details">Product Details</button>
+
+        <div class="panel panel-default">
+          <div class="panel-heading" role="tab" id="headingTwo">
+            <h4 class="panel-title">
+              <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">Product Details
+              </a>
+            </h4>
+          </div>
+          <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+            <div class="panel-body" id="product_3_details" >
+            </div>
+          </div>
+        </div>
+      </div>
         </div>
 
       </div>
@@ -282,12 +323,15 @@
         // console.log('data is', data);
         $("#product_1").text(data[1][0]);
         $("#Price_1").text("Price: $" + data[1][1]);
+        $("#product_1_details").text(data[1][0]);
         
         $("#product_2").text(data[2][0]);
         $("#Price_2").text("Price: $" + data[2][1]);
+        $("#product_2_details").text(data[2][0]);
         
         $("#product_3").text(data[3][0]);
         $("#Price_3").text("Price: $" + data[3][1]);
+        $("#product_3_details").text(data[3][0]);
 
 
         // var mytextbox = document.getElementById("product_1");
