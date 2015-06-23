@@ -6,7 +6,7 @@ from pymongo import MongoClient
 
 
 #--------------Function for querying the product-----#
-def list_of_10(priority,concern_list):
+def list_of_15(priority,concern_list):
     dd ={"dry_skin_score":-0.1,"oily_skin_score":-0.1, 
          "sensitive_score":-0.1,"sunscreen_score":-0.1,
          "combination_skin_score":-0.1,"redness_score":-0.1,
@@ -21,14 +21,21 @@ def list_of_10(priority,concern_list):
                  "sensitive_score":{"$gt":dd["sensitive_score"]},"sunscreen_score":{"$gt":dd["sunscreen_score"]},
                  "combination_skin_score":{"$gt":dd["combination_skin_score"]}, "redness_score":{"$gt":dd["redness_score"]},
                  "anti_aging_score":{"$gt":dd["anti_aging_score"]},"acne_score":{"$gt":dd["acne_score"]}})
-    number_of_items = min(10,x.count())
+    number_of_items = min(15,x.count())
     list_of_items = []
     for i in xrange(number_of_items):
         list_of_items.append(x.sort(priority,pymongo.DESCENDING)[i])
     
     return list_of_items 
 
-
+def list_of_5(items_list):
+	item_reviews = MongoClient().dsbc.item_reviews
+	list_item = []
+	find_item_review = item_reviews.find({"item_id":{"$in":items_list}})
+	order_items = find_item_review.sort("star_rating_ave", pymongo.DESCENDING)
+	for each_item in order_items:
+		list_item.append(each_item)
+	return list_item[:5]
 
 
 
@@ -61,13 +68,22 @@ def recommendation():
 	list_of_concern = data["priority"]+ data["skin_type"] + other_concerns
 
 	list_of_concern = list(set(list_of_concern))
-	print list_of_concern
+	#print list_of_concern
 
-	recommended_items =list_of_10(priority_concern,list_of_concern) 
+	recommended_15_items = list_of_15(priority_concern,list_of_concern)
+	item_ids = [i['item_id'] for i in recommended_15_items]
+	recommended_5_items =  list_of_5(item_ids)
+	
 
-	results = {1:[recommended_items[0]['name'],recommended_items[0]['price']],
-			   2:[recommended_items[1]['name'],recommended_items[1]['price']],
-			   3:[recommended_items[2]['name'],recommended_items[2]['price']]} 	
+	results = {1:[recommended_5_items[0]['name'],recommended_5_items[0]['star_rating_ave'],
+				  recommended_5_items[0]['number_of_reviews'],recommended_5_items[0]['reviews_summary'],
+				  recommended_15_items[0]['price']],
+			   2:[recommended_5_items[1]['name'],recommended_5_items[1]['star_rating_ave'],
+				  recommended_5_items[1]['number_of_reviews'],recommended_5_items[0]['reviews_summary'],
+				  recommended_15_items[1]['price']],
+			   3:[recommended_5_items[2]['name'],recommended_5_items[2]['star_rating_ave'],
+				  recommended_5_items[2]['number_of_reviews'],recommended_5_items[2]['reviews_summary'],
+				  recommended_15_items[2]['price']]} 	
 
 	return flask.jsonify(results)
 
