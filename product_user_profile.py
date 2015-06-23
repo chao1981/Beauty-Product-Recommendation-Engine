@@ -22,7 +22,7 @@ anti_aging_class = ["anti-aging", " aging", "wrinkle", "fine lines"]
 
 redness_class = ["redness", "red spot", "rosacea"]
 
-sunscreen_class = ["sunscreen", "sun protection"]
+sunscreen_class = ["sunscreen", "sun protection", "SPF"]
 def category_score(text,category,rating):
     score = 0
     for term in category:

@@ -22,15 +22,7 @@
     h1   {color:plum}
     input{color:black}
 
-    button {
-    float: left;
-    height: 100px;
-    width: 100px;
-    border-radius: 50px;
-    border: 5px solid #000;
-    margin: 5000;
-
-}
+    
     .wrapper {
        width: 800px;
        margin-left: auto;
@@ -56,7 +48,7 @@
     margin: 1%;
     padding: 10px;
     width: 20%;
-    height: 250px;
+    height: 350px;
     border: 2px solid black;
 } 
     .result_box {
@@ -64,7 +56,7 @@
     margin: 1%;
     padding: 10px;
     width: 30%;
-    height: 250px;
+    height: 350px;
     border: 2px solid black;
 
     }
@@ -77,8 +69,8 @@
 
       <!-- The justified navigation menu is meant for single line per list item.
            Multiple lines will require custom code not provided by Bootstrap. -->
-      <div class="masthead">
-        <h3 class="text-muted">Project name</h3>
+    <div class="masthead">
+      
         <nav>
           <ul class="nav nav-justified">
             <li class="active"><a href="#">Home</a></li>
@@ -89,13 +81,13 @@
             <li><a href="#">Contact</a></li>
           </ul>
         </nav>
-      </div>
+    </div>
 
       <!-- Jumbotron -->
-      <div class="jumbotron">
-        <form>
-        <fieldset>
-        <legend> The Beauty Information</legend>
+    <div class="jumbotron">
+      <form>
+        <fieldset><p>
+        <legend> Your beauty profile</legend>
           <div class="condition_box " >
            <h2> Skin type </h2>
           <div class="radio">
@@ -191,48 +183,56 @@
 
    <div class="condition_box ">
       <h2>What else?</h2>
-      <textarea name="extra_information" rows="12" cols="26" id="textbox"></textarea>
-        
+      <textarea name="extra_information" rows="10" cols="20" id="textbox"></textarea>  
     </div>
   <!--   <input type="submit" value="submit"> -->
-  <button type="submit" class="btn btn-lg btn-success">Submit</button>
+  </p>
+  <div>
+  <button type="submit" class="btn btn-default btn-lg">
+  <span class="glyphicon glyphicon-heart" aria-hidden="true"></span> GO
+  </button>
+</div>
+
   </fieldset>
 </form>
 
   </div>
 
       <!-- Example row of columns -->
+      <div class="jumbotron">
+      <legend>We recommend:</legend>
       <div class="row">
         <div class="col-lg-4" id="product_1">
           <h2>Product 1</h2>
-          
           <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
         </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="product_2">
           <h2>Product 2</h2>
           <p> </p>
           <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
        </div>
-        <div class="col-lg-4">
+        <div class="col-lg-4" id="product_3">
           <h2>Product 3</h2>
           <p></p>
           <p><a class="btn btn-primary" href="#" role="button">View details &raquo;</a></p>
         </div>
       </div>
+    </div>
 
       <!-- Site footer -->
       <footer class="footer">
-        <p>&copy; Company 2014</p>
+        <p>&copy; Poro & Skylar </p>
       </footer>
 
     </div> <!-- /container -->
 
 
   
-
+<!-- 
   <div class="result_box" id = "product_1">
     <textarea name="extra_information" rows="12" cols="26" id="textbox" value=""></textarea>
-  </div>
+  </div> -->
+
 
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
@@ -270,6 +270,10 @@
       success: function(data){
         // console.log('data is', data);
         $("#product_1").text(data[1][0]);
+        $("#product_2").text(data[2][0]);
+        $("#product_3").text(data[3][0]);
+
+
         // var mytextbox = document.getElementById("product_1");
         //                           mytextbox = mytextbox.value+ data.keys()[1];
                                   },
