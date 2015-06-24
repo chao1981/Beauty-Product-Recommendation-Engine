@@ -3,7 +3,8 @@ import numpy as np
 import pandas as pd
 import pymongo
 from pymongo import MongoClient
-
+import copy
+import add_price 
 
 #--------------Function for querying the product-----#
 def list_of_15(priority,concern_list):
@@ -28,15 +29,15 @@ def list_of_15(priority,concern_list):
     
     return list_of_items 
 
-def list_of_5(items_list):
-	item_reviews = MongoClient().dsbc.item_reviews
-	list_item = []
-	find_item_review = item_reviews.find({"item_id":{"$in":items_list}})
-	order_items = find_item_review.sort("star_rating_ave", pymongo.DESCENDING)
-	for each_item in order_items:
-		list_item.append(each_item)
-	return list_item[:5]
 
+def list_of_5(items_list):
+    item_reviews = MongoClient().dsbc.item_reviews
+    list_item = []
+    find_item_review = item_reviews.find({"item_id":{"$in":items_list}})
+    order_items = find_item_review.sort("star_rating_ave", pymongo.DESCENDING)
+    for each_item in order_items:
+        list_item.append(each_item)
+    return list_item[:5]
 
 
 #-------------URLS AND WEB PAGES---------------------#
@@ -47,45 +48,54 @@ app = flask.Flask(__name__)
 #Homepage
 @app.route("/")
 def viz_page():
-	"""
-	Homepage: serve our visualization page, awake_beauty.html
-	"""
-	with open("awake_beauty.html", 'r') as viz_file:
-		return viz_file.read()
+    """
+    Homepage: serve our visualization page, awake_beauty.html
+    """
+    with open("awake_beauty.html", 'r') as viz_file:
+        return viz_file.read()
 
 @app.route("/recommendation", methods=["POST"])
 def recommendation():
-	"""
-	When a POST request with json data is made to this url,
-	read the data from json, find the beauty product, then
-	return the response
-	"""
-	data = flask.request.json
-	
-	priority_concern = data["priority"][0]
-	other_concerns = data["others"][0].split(",")
+    """
+    When a POST request with json data is made to this url,
+    read the data from json, find the beauty product, then
+    return the response
+    """
+    data = flask.request.json
+    
+    priority_concern = data["priority"][0]
+    other_concerns = data["others"][0].split(",")
 
-	list_of_concern = data["priority"]+ data["skin_type"] + other_concerns
+    list_of_concern = data["priority"]+ data["skin_type"] + other_concerns
 
-	list_of_concern = list(set(list_of_concern))
-	#print list_of_concern
+    list_of_concern = list(set(list_of_concern))
+    #print list_of_concern
 
-	recommended_15_items = list_of_15(priority_concern,list_of_concern)
-	item_ids = [i['item_id'] for i in recommended_15_items]
-	recommended_5_items =  list_of_5(item_ids)
-	
+    recommended_15_items = list_of_15(priority_concern,list_of_concern)
 
-	results = {1:[recommended_5_items[0]['name'],recommended_5_items[0]['star_rating_ave'],
-				  recommended_5_items[0]['number_of_reviews'],recommended_5_items[0]['reviews_summary'],
-				  recommended_15_items[0]['price']],
-			   2:[recommended_5_items[1]['name'],recommended_5_items[1]['star_rating_ave'],
-				  recommended_5_items[1]['number_of_reviews'],recommended_5_items[0]['reviews_summary'],
-				  recommended_15_items[1]['price']],
-			   3:[recommended_5_items[2]['name'],recommended_5_items[2]['star_rating_ave'],
-				  recommended_5_items[2]['number_of_reviews'],recommended_5_items[2]['reviews_summary'],
-				  recommended_15_items[2]['price']]} 	
+    item_ids = [i['item_id'] for i in recommended_15_items]
 
-	return flask.jsonify(results)
+    recommended_5_items =  list_of_5(item_ids)
+    
+    
+
+    #####------Trying to add price into my data---------------
+    recommended_items = add_price.add_price(recommended_5_items)
+
+    print type(recommended_items[0]['star_rating_ave'])
+    results = {1:[recommended_items[0]['name'],round(recommended_items[0]['star_rating_ave'],3),
+                  recommended_items[0]['number_of_reviews'],recommended_items[0]['reviews_summary'],
+                  recommended_items[0]['price']],
+               2:[recommended_items[1]['name'],round(recommended_items[1]['star_rating_ave'],3),
+                  recommended_items[1]['number_of_reviews'],recommended_items[1]['reviews_summary'],
+                  recommended_items[1]['price']],
+               3:[recommended_items[2]['name'],round(recommended_items[2]['star_rating_ave'],3),
+                  recommended_items[2]['number_of_reviews'],recommended_items[2]['reviews_summary'],
+                  recommended_items[2]['price']]}
+
+     
+
+    return flask.jsonify(results)
 
 #--------- RUN WEB APP SERVER ------------#
 
