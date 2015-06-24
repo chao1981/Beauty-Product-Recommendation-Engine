@@ -5,6 +5,8 @@ import pymongo
 from pymongo import MongoClient
 import copy
 import add_price 
+import distance_measure
+from distance_measure import two_paragraph_distance as tpd
 
 #--------------Function for querying the product-----#
 def list_of_15(priority,concern_list):
@@ -38,6 +40,10 @@ def list_of_5(items_list):
     for each_item in order_items:
         list_item.append(each_item)
     return list_item[:5]
+
+def add_distance(user_text,items_list):
+    for each_item in item_list:
+        distance = 
 
 
 #-------------URLS AND WEB PAGES---------------------#
@@ -76,6 +82,8 @@ def recommendation():
     item_ids = [i['item_id'] for i in recommended_15_items]
 
     recommended_5_items =  list_of_5(item_ids)
+
+    recommended_5 = add_price.add_price(recommended_5_items)
     
     
 
