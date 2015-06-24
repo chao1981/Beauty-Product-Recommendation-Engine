@@ -347,7 +347,7 @@
     </div>
     <div class="jumbotron">
       <div class="container" id="d3_graph">
-        <h4>How much people likes these product over the year:</h4>
+        <h4>How people like these products over time:</h4>
         <h5> (0=neutral , positive=like, negative=dislike)</h5> 
         
       </div>
@@ -409,7 +409,7 @@
 
     
     var y = d3.scale.linear()
-            .domain([0, d3.max(data, function(d) { return d[1]; })])
+            .domain([-0.8, d3.max(data, function(d) { return d[1]; })])
             .range([ height, 0 ]);
  
     var chart = d3.select("#d3_graph")
