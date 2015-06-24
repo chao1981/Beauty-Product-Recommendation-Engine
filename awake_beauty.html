@@ -13,6 +13,7 @@
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 
   <!--import libraries-->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/3.5.5/d3.min.js"></script>
   <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
 
@@ -62,6 +63,24 @@
     }
     .panel-body .review_summary{
       font-size: 14px;
+    }
+
+    .chart {
+
+    }
+
+    .main text {
+    font: 10px sans-serif;  
+    }
+
+    .axis line, .axis path {
+    shape-rendering: crispEdges;
+    stroke: black;
+    fill: none;
+  }
+
+    circle {
+    fill: steelblue;
     }
 
 </style>
@@ -238,8 +257,7 @@
                 <h5>Reviews Summary:</h5>
                 <p class="review_summary" id="reviews_summary1" >
                 </p>
-              </div> 
-
+              </div>
             </div>
           </div>
         </div>
@@ -327,22 +345,29 @@
 
       </div>
     </div>
+    <div class="jumbotron">
+      <div class="container" id="d3_graph">
+        <h4>How much people likes these product over the year:</h4>
+        <h5> (0=neutral , positive=like, negative=dislike)</h5> 
+        
+      </div>
+    </div>
+    
+ 
 
       <!-- Site footer -->
       <footer class="footer">
         <p>&copy; Poro & Skylar </p>
       </footer>
 
-    </div> <!-- /container -->
-
-
-  
-<!-- 
-  <div class="result_box" id = "product_1">
-    <textarea name="extra_information" rows="12" cols="26" id="textbox" value=""></textarea>
-  </div> -->
-
-
+  </div> <!-- /container -->
+<!-- <div class="jumbotron">
+      <div class="container" id="d3_graph">
+        <h4>How much people likes these product over the year:</h4>
+        <h5> O : neutral , positive : like, negative : dislike</h5> 
+        
+      </div>
+    </div> -->
 
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 
@@ -353,8 +378,81 @@
     recommend_product()
     
   });
-  
 
+  // function make_graph(data) {
+  //   var margin = {top: 20, right: 15, bottom: 60, left: 60}
+  //     , width = 960 - margin.left - margin.right
+  //     , height = 500 - margin.top - margin.bottom;
+  
+  function make_graph(data) {
+    var margin = {top: 20, right: 15, bottom: 40, left: 40}
+      , width = 350 - margin.left - margin.right
+      , height = 300 - margin.top - margin.bottom;
+    
+    real_date = data[0][0];
+
+    var dates = data.map(function(d){
+                return new Date(d[0]);
+    })
+    console.log('dates', dates);
+    console.log(d3.extent(dates));
+
+ x = d3.time.scale()
+              .domain(d3.extent(dates))
+              .range([ 0, width ]);
+
+    // var x = d3.time.scale()
+    //           .domain(d3.extent(data, function(d) { console.log(d);
+    //             console.log(d3.time.format("%b %e" )(new Date(d[0])));
+    //             return d3.time.format("%b %e" )(new Date(d[0])); }))
+    //           .range([ 0, width ]);
+
+    
+    var y = d3.scale.linear()
+            .domain([0, d3.max(data, function(d) { return d[1]; })])
+            .range([ height, 0 ]);
+ 
+    var chart = d3.select("#d3_graph")
+  .append('svg:svg')
+  .attr('width', width + margin.right + margin.left)
+  .attr('height', height + margin.top + margin.bottom)
+  .attr('class', 'chart')
+
+    var main = chart.append('g')
+  .attr('transform', 'translate(' + margin.left + ',' + margin.top + ')')
+  .attr('width', width)
+  .attr('height', height)
+  .attr('class', 'main')   
+        
+    // draw the x axis
+    var xAxis = d3.svg.axis()
+  .scale(x)
+  .orient('bottom');
+
+    main.append('g')
+  .attr('transform', 'translate(0,' + height + ')')
+  .attr('class', 'main axis date')
+  .call(xAxis);
+
+    // draw the y axis
+    var yAxis = d3.svg.axis()
+  .scale(y)
+  .orient('left');
+
+    main.append('g')
+  .attr('transform', 'translate(0,0)')
+  .attr('class', 'main axis date')
+  .call(yAxis);
+
+    var g = main.append("svg:g"); 
+    
+    g.selectAll("scatter-dots")
+      .data(data)
+      .enter().append("svg:circle")
+          .attr("cx", function (d,i) { return x(new Date(d[0])); } )
+          .attr("cy", function (d) { return y(d[1]); } )
+          .attr("r", 3);
+  };
 
   function recommend_product(){
     var other_concerns = $.map($("input:checkbox:checked"), function(elem){return $(elem).val();});
@@ -377,6 +475,7 @@
       async:true,
       data: input_data,
       success: function(data){
+        
         console.log('data is', data);
         $("#product_1").text(data[1][0]);
         $("#Price_1").text("$" + data[1][4]);
@@ -395,6 +494,10 @@
         $("#reviews_summary3").text(data[3][3]);
         $("#rating3").text(data[3][1]);
         $("#num3").text(data[3][2]);
+
+        make_graph(data["graph_data1"]);
+        make_graph(data["graph_data2"]);
+        make_graph(data["graph_data3"]);
 
 
         // var mytextbox = document.getElementById("product_1");
@@ -418,6 +521,7 @@
    
 
 </body>
+
 
 
 </html>

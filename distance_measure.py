@@ -11,5 +11,5 @@ def two_paragraph_distance(based_p,other_p):
     other_p_list = "".join(other_p).split()
     other_p_set = set([term for term in other_p_list if term not in stopword])
     nom = len(based_p_set.intersection(other_p_set))
-    denom = len(based_p_set)
+    denom = len(based_p_set) + 1
     return nom/denom

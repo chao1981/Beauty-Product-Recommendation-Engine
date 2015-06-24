@@ -7,6 +7,13 @@ import copy
 import add_price 
 import distance_measure
 from distance_measure import two_paragraph_distance as tpd
+import item_sentiment
+from item_sentiment import get_item_sentiment
+import plotly.plotly as py
+from plotly.graph_objs import *
+
+#py = plotly(username='ha.luu1207',key='prh430pf04')
+
 
 #--------------Function for querying the product-----#
 def list_of_15(priority,concern_list):
@@ -42,8 +49,31 @@ def list_of_5(items_list):
     return list_item[:5]
 
 def add_distance(user_text,items_list):
-    for each_item in item_list:
-        distance = 
+    new_list = copy.deepcopy(items_list)
+    for each_item in new_list:
+        distance = tpd(user_text[0].lower(),each_item['reviews_summary'])
+        each_item['distance'] = distance
+    return new_list
+
+def plot_sentiment(item,name_plot):
+    sent_points = get_item_sentiment(item['item_id'])
+    trace0 = Scatter(x=sent_points[0],y=sent_points[1],
+                     mode='markers', markers=Marker(size=8),
+                     name='reviews sentiment score')
+    trace1 = Scatter(x=sent_points[0],y=[0]*len(sent_points[1]),
+                     name = "neutral line")
+    data = ([trace0,trace1])
+
+    layout = Layout(xaxis=XAxis(title='Time Line',autorange=True),
+                    yaxis=YAxis(title='Sentiment score on product',autorange=True),
+                    legend=Legend(y=0.5,yref='paper',font=Font(size=10,)), )
+    fig = Figure(data=data, layout=layout)
+    plot_url = py.plot(fig, filename=name_plot)
+    return plot_url
+
+
+
+
 
 
 #-------------URLS AND WEB PAGES---------------------#
@@ -87,10 +117,27 @@ def recommendation():
     
     
 
-    #####------Trying to add price into my data---------------
-    recommended_items = add_price.add_price(recommended_5_items)
+    #####------Trying to add price and distance into my data---------------
+    #recommended_items = add_price.add_price(recommended_5_items)
+    unsorted_recommended_items = add_distance(data['extra_info'], recommended_5)
+    sorted_recommended_items = sorted(unsorted_recommended_items,key=lambda k: k['distance'],reverse=True)    
+    recommended_items = sorted_recommended_items[:3]
+    
+    # plot1 = plot_sentiment(recommended_items[0],'sentiment plot 1')
+    # plot2 = plot_sentiment(recommended_items[1],'sentiment plot 2')
+    # plot3 = plot_sentiment(recommended_items[2],'sentiment plot 3')
+    
+    graph_data1 = get_item_sentiment(recommended_items[0]['item_id'])
+    new_data1 = np.asarray(graph_data1).T.tolist()
+    graph_data2 = get_item_sentiment(recommended_items[1]['item_id'])
+    new_data2 = np.asarray(graph_data2).T.tolist()
+    graph_data3 = get_item_sentiment(recommended_items[2]['item_id'])
+    new_data3 = np.asarray(graph_data3).T.tolist()
 
-    print type(recommended_items[0]['star_rating_ave'])
+
+
+
+    ####-------Result to be return to html----------------------------------
     results = {1:[recommended_items[0]['name'],round(recommended_items[0]['star_rating_ave'],3),
                   recommended_items[0]['number_of_reviews'],recommended_items[0]['reviews_summary'],
                   recommended_items[0]['price']],
@@ -99,7 +146,9 @@ def recommendation():
                   recommended_items[1]['price']],
                3:[recommended_items[2]['name'],round(recommended_items[2]['star_rating_ave'],3),
                   recommended_items[2]['number_of_reviews'],recommended_items[2]['reviews_summary'],
-                  recommended_items[2]['price']]}
+                  recommended_items[2]['price']],
+              "graph_data1":new_data1,"graph_data2":new_data2,"graph_data3":new_data3 }
+    
 
      
 
