@@ -16,6 +16,8 @@ Goal : Beauty product recommendation.
        		Based on text comparison, return a maximum of 3 products as recommendations.
        		
        5) Put a sentiment Graph to show how well the product performs over time.
+       
+       6) Make an app up and running on AWS
 
 UP AND RUNNING : Beauty3.ninja 
 
