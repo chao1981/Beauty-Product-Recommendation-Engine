@@ -26,5 +26,7 @@ beauty3 : We only recommend 3 beauty products at a times (yay, no overwhelming a
 .ninja  : Because just as ninja, we are highly skilled and precise.
 (secretly, as always come with "ninja", is because it's awesome :D)
 
+Project presentation slides : https://docs.google.com/presentation/d/1H1eKWQf-xMIRaP0BkrHo3TYLzpiwGvPLf8NGj3m2a1s/pub?start=false&loop=false&delayms=3000
+
 
        			
